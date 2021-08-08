@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}" />
+        <title>{% block title %}{% endblock %}</title>
+
+
+        <script>
+            
+            var totalNeed = 50;
+            var totalWant = 50;
+
+            function addRow()
+            {
+                // get input values
+                var item = document.getElementById('item').value;
+                 var price = (document.getElementById('price').value).valueOf();
+                  var necessityRadio = document.getElementById('necessity');
+                  var necessity = "Want";
+                  if (necessityRadio.checked){
+                      necessity = "Need";
+                  }
+                  // get the html table
+                  // 0 = the first table
+                  var table = document.getElementsByTagName('table')[0];
+                  
+                  // add new empty row to the table
+                  // 0 = in the top 
+                  // table.rows.length = the end
+                  // table.rows.length/2+1 = the center
+                  var newRow = table.insertRow(table.rows.length/2+1);
+                  
+                  // add cells to the row
+                  var cel1 = newRow.insertCell(0);
+                  var cel2 = newRow.insertCell(1);
+                  var cel3 = newRow.insertCell(2);
+                  
+                  // add values to the cells
+                  cel1.innerHTML = item;
+                  cel2.innerHTML = price;
+                  cel3.innerHTML = necessity;
+                  
+                  if (necessity == "Need"){
+                      totalNeed += price;
+                  }
+                  else if (necessity == "Want"){
+                    totalWant += price;
+                  }
+                  
+                  console.log("Total Need: " + totalNeed);
+                  console.log("Total Want: " + totalWant);
+                  
+                  drawChart();
+            }
+            
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                ['Necessity', 'Expense'],
+                ['Want', totalWant],
+                ['Need', totalNeed],
+                ]);
+
+                // Optional; add a title and set the width and height of the chart
+                var options = {'title':'My Expense', 'width':550, 'height':400};
+
+                // Display the chart inside the <div> element with id="piechart"
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
+                }
+            
+        </script>
+
+    </head>
+        <body>
+            <div class = "bg">
+                
+                <section class = "header">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <a class="navbar-brand" href="#">CollegeStudentTools</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                    
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                            <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="/studentLoanCalculator">Student Loan Calculator</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="expenseTracker">Expense Tracker</a>
+                            </li>
+                            
+                        </ul>
+                        </div>
+                    </nav>
+                </section>                          
+
+            {% block content %}
+            
+            {% endblock %}
+            </div>
+        </body>
+</html>

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}" />
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+        
+    </head>
+        <body>                
+        {% block content %}
+        <br>
+        <div class = "pageHeader">
+        <h1>Expense Tracker</h1>
+        </div>
+        <br>
+        <br>
+        <form method = "POST">
+        Item: <input type="text" name="item" id="item" /><br/><br/>
+        Price: <input type="number" name="price" id="price" /><br/><br/>
+        Necessity:
+        <input type="radio" id="necessity" name="necessity" value="Need">
+        <label for="need">Need</label>
+
+        <input type="radio" id="necessity" name="necessity" value="Want">
+        <label for="want">Want</label><br>
+
+        <br/>
+        <br/>
+    </form>
+        <button onclick = "addRow();">Add Row</button><br/><br/>
+
+        <div class = "row justify-content-center">        
+            <table border="1">
+                 <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Necessity</th>
+                </tr>
+                    
+            </table>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div id="piechart"></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+
+// google.charts.load('current', {'packages':['corechart']});
+// google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+
+</script>
+
+
+            {% endblock %}
+        <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+        </body>
+</html>
+
